@@ -1,0 +1,1856 @@
+/* Copyright (C) 2013 Interactive Brokers LLC. All rights reserved.  This code is subject to the terms
+ * and conditions of the IB API Non-Commercial License or the IB API Commercial License, as applicable. */
+
+package apidemo;
+
+import static apidemo.util.Util.sleep;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import com.ib.client.*;
+import com.ib.client.HistoricalTick;
+import com.ib.client.HistoricalTickBidAsk;
+import com.ib.client.HistoricalTickLast;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.TreeSet;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.*;
+//goal now is to make it find more precise near ones for puts, and calls. 
+///somewhere strikes are getting mixed up!!!
+
+
+public class firstlivedec282017_1241pmet implements EWrapper {
+        Vector<TagValue> mktDataOptions = new Vector<TagValue>();
+    private EJavaSignal m_signal = new EJavaSignal();
+    private final EClientSocket client = new EClientSocket(this, m_signal);
+        private double high;
+        private double low;
+    // Keep track of the next ID
+    private int nextOrderID = 0;
+//    private Contract contract = new Contract();
+
+    private int nextValidId_prev;
+    private EReader reader = null;
+ private String xxxx = "";
+ private String xxxxx = "";
+ private boolean var = false;
+public   double aaff =0;
+  double cal1;
+  double cal2;
+    double cal3;
+  //private String twsAccountNumber = "U1836253"; // "U1836253" DU22993;
+String corp = "";
+double strikepr = 0.0;
+ int idd =0;
+    private List<Contract> twsContractList;
+    private List<SymbolStructure> bothSymbolsList = null;
+    //private List<Contract> reqIdToSymbolMappingList;
+    private List<portfoliostructure> aaa = null;
+    private ArrayList<String> list;
+	
+	private EClientSocket m_s = new EClientSocket(this, m_signal);
+	private int NextOrderId = 0;
+
+   public static void main(String[] args) {
+       
+        //new Newevo1().startTws();
+        firstlivedec282017_1241pmet firstlivedec282017_1241pmet = new firstlivedec282017_1241pmet(); 
+        firstlivedec282017_1241pmet.twsConnectionChecker();
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+         
+        firstlivedec282017_1241pmet.createInterestedContractList();
+        firstlivedec282017_1241pmet.getContractDetails();
+      
+        //firstlivedec282017_1241pmet.requestHistoricalData();
+      
+    
+        
+    }
+
+    private void getContractDetails() {
+        for (int i = 0; i < twsContractList.size(); i++) {
+            Contract contractForContractDetails = twsContractList.get(i);
+            client.reqContractDetails(i, contractForContractDetails);
+        }
+         
+    }
+
+    private void createInterestedContractList(){
+        
+      
+              bothSymbolsList = new ArrayList<>();
+
+      
+
+        SymbolStructure symbolStructure;
+   
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BAC";
+        symbolStructure.decimalFormat = "0.00";
+         symbolStructure.reqId = 0;
+        bothSymbolsList.add(symbolStructure);
+
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XLE";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 1;
+        bothSymbolsList.add(symbolStructure);
+
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XLF";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 2;
+        bothSymbolsList.add(symbolStructure);
+//
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "QQQ";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 3;
+        bothSymbolsList.add(symbolStructure);
+         
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BABA";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 4;
+        bothSymbolsList.add(symbolStructure);
+        
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "SPY";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 5;
+        bothSymbolsList.add(symbolStructure);
+        
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "IWM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 6;
+        bothSymbolsList.add(symbolStructure);
+        
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "JPM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 7;
+        bothSymbolsList.add(symbolStructure);
+        
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "KR";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 8;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "PG";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 9;
+        bothSymbolsList.add(symbolStructure);
+//
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AAPL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 10;
+        bothSymbolsList.add(symbolStructure);
+        //
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "IBM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 11;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "EEM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 12;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "TWTR";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 13;
+        bothSymbolsList.add(symbolStructure);
+        //
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "TSLA";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 14;
+        bothSymbolsList.add(symbolStructure);
+        //
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "C";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 15;
+        bothSymbolsList.add(symbolStructure);
+                //
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AMZN";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 16;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "FB";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 17;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MSFT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 18;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "A";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 19;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AABA";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 20;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AAL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 21;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ABBV";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 22;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ABT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 23;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ABX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 24;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ADBE";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 25;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ADM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 26;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ADSK";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 27;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AEM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 28;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AGN";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 29;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ALL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 30;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AMGN";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 31;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ANF";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 32;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ANTM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 33;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AUY";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 34;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "AXP";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 35;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ATVI";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 36;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BB";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 37;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BBBY";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 38;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BBY";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 39;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BA";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 40;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BBT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 41;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BK";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 42;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BP";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 43;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BRKB";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 44;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "BSX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 45;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "CI";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 46;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "CIT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 47;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "CL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 48;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "COST";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 49;
+        bothSymbolsList.add(symbolStructure);
+       
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "CVS";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 50;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "CVX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 51;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "CRM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 52;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "CREE";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 53;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "DAL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 54;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "DB";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 55;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "DHI";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 56;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "DIA";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 57;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "EBAY";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 58;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "EA";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 59;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ETFC";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 60;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "FDX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 61;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "FCX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 62;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "FFIV";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 63;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "FIS";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 64;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "FSLR";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 65;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "GE";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 66;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "GIS";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 67;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "GLD";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 68;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "GM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 69;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "HAL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 70;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "HD";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 71;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "HLF";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 72;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "HPQ";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 73;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "INTC";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 74;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "JNJ";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 75;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "JNPR";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 76;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "KBH";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 77;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "M";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 78;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MCD";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 79;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MET";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 80;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MMM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 81;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MON";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 82;
+        bothSymbolsList.add(symbolStructure);
+              /*  
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MOS";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 83;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MPC";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 84;
+        bothSymbolsList.add(symbolStructure);
+       
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MRK";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 85;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MYL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 86;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "MRO";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 87;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "NFLX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 88;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "ORCL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 89;
+        bothSymbolsList.add(symbolStructure);
+         
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "PFE";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 90;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "PRU";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 91;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "POT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 92;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "PM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 93;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "PNC";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 94;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "QCOM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 95;
+        bothSymbolsList.add(symbolStructure);
+      
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "RIG";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 96;
+        bothSymbolsList.add(symbolStructure);
+          
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "S";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 97;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "SLB";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 98;
+        bothSymbolsList.add(symbolStructure);
+
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "T";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 99;
+        bothSymbolsList.add(symbolStructure);
+       
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "TGT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 100;
+        bothSymbolsList.add(symbolStructure);
+          
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "TIF";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 101;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "TWX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 102;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "TXT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 103;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "UPS";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 104;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "USO";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 105;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "USB";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 106;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "UAL";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 107;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "UNP";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 108;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "V";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 109;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "UAA";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 110;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "WFC";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 111;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "WMT";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 112;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "X";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 113;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XOM";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 114;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "YELP";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 115;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XRX";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 116;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XLP";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 117;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XLV";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 118;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XLU";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 119;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "XLK";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 120;
+        bothSymbolsList.add(symbolStructure);
+        
+        symbolStructure = new SymbolStructure();
+        symbolStructure.firstSymbol = "WYNN";
+        symbolStructure.decimalFormat = "0.00";
+        symbolStructure.reqId = 121;
+        bothSymbolsList.add(symbolStructure);
+        */
+        
+        
+        twsContractList = new ArrayList<>();
+        Contract contract = null;
+        
+        for (int i = 0; i < bothSymbolsList.size(); i++) {
+            contract = new Contract();
+              contract.symbol(bothSymbolsList.get(i).firstSymbol);
+         contract.secType("STK");
+		contract.currency("USD");
+		contract.exchange("SMART");
+             contract.primaryExch("NASDAQ");
+            symbolStructure.reqId = i;
+           // System.out.println("i = " + i + ", symbolStructure.reqId = " + symbolStructure.reqId);
+
+            twsContractList.add(contract);
+
+            //System.out.println("make sure" + twsContractList.get(i).symbol());
+        }
+    }
+    
+
+    private void twsConnectionChecker() {
+        new Thread(() -> {
+            while (!Thread.interrupted()) {
+
+                if (client.isConnected()) {
+                    //log.info("tws connected");
+                    client.reqCurrentTime();
+                  try {
+                        Thread.sleep(5000);
+                      
+        
+                    } catch (InterruptedException ex) {
+                      
+                          System.err.println("thread pausing!!!!! ");
+                        Logger.getLogger(Newevo1.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    connectingToTWS();
+                }
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+          }).start();
+    }
+
+    private void connectingToTWS() {
+      
+        client.eConnect("127.0.0.1", 7496, 0);
+reader = new EReader(client, m_signal);
+reader.start();
+
+
+        new Thread(() -> {
+            while (client.isConnected()) {
+                m_signal.waitForSignal();
+                try {
+                    reader.processMsgs();
+                } catch (Exception e) {
+                    error(e);
+                }
+                //log.info("processMsgs thread running");
+            }
+            System.err.println("thread exiting");
+        }).start();
+
+        //Contract contract = new Contract();
+        //Order order = new Order();
+        //client.reqMarketDataType(3);
+        //contract.m_localSymbol = "ESM7";
+/////////////
+////////mark ////
+///took shower///
+
+///buult NewTest_1.java for order entry imp
+
+
+
+        //requestHistoricalData();
+        //requestStreamingData();
+
+        // TODO removed
+        //client.reqAccountUpdates(true, twsAccountNumber);
+    }
+
+     private void requestHistoricalData() {
+        // TODO in case of sunday start, we need fridays time
+       // String requestDateTime = LocalDate.now().minus(3600, s).format(DateTimeFormatter.BASIC_ISO_DATE);
+     //   System.out.println("works21");
+    
+
+        for (int i = 0; i < twsContractList.size(); i++) {
+            Contract contractForHistory = twsContractList.get(i);
+            LocalDateTime aaa = LocalDateTime.now().minusMinutes(5);
+            LocalDateTime time = LocalDateTime.now();
+LocalDateTime lastQuarter = time.truncatedTo(ChronoUnit.HOURS)
+                                .plusMinutes(5 * (time.getMinute() / 5));
+             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd  HH:mm:ss");
+       String formatDateTime = lastQuarter.format(formatter);
+        System.out.println("works21 "+formatDateTime);
+        //    client.reqHistoricalData(i, contractForHistory,"" , "1 W", "1 day", "MIDPOINT", 1, 1,false,mktDataOptions);
+                System.out.println( "historical");  
+                
+                 
+ 
+        }
+    
+    }
+	
+      private void requestOption() {
+           for (int i = 0; i < bothSymbolsList.size(); i++) { 
+             }}
+      
+    private void requestStreamingData() {
+          
+      //  System.out.println( ", it made it here= ");
+        for (int i = 0; i < twsContractList.size(); i++) {
+            Contract contractForRealTimeData = twsContractList.get(i);
+            client.reqMarketDataType(4);
+            
+            client.reqMktData(i, contractForRealTimeData, "", false ,false, null);
+            System.out.println( "streaming");
+            //  client.reqMktData(i, contractForRealTimeData, "", false ,false, null);
+        
+          
+        }
+ // check=false;
+     }
+       @Override public void historicalData(int reqId, Bar bar) {
+	System.out.println(EWrapperMsgGenerator.historicalData( reqId, bar.time(), bar.open(), bar.high(), bar.low(), bar.close(), bar.volume(), bar.count(), bar.wap()));
+	 if (LocalDate.now().minusDays(2).format(DateTimeFormatter.BASIC_ISO_DATE).equals(bar.time()))
+        {
+        System.out.println("xxxx");
+        }
+   }
+
+	@Override public void nextValidId(int orderId) {
+		  nextOrderID = orderId;
+		System.out.println(EWrapperMsgGenerator.nextValidId(orderId));
+	}
+
+	@Override public void error(Exception e) {
+		System.out.println(EWrapperMsgGenerator.error(e));
+	}
+
+	@Override public void error(int id, int errorCode, String errorMsg) {
+		System.out.println(EWrapperMsgGenerator.error(id, errorCode, errorMsg));
+	}
+
+	@Override public void connectionClosed() {
+		System.out.println(EWrapperMsgGenerator.connectionClosed());
+	}
+
+	@Override public void error(String str) {
+		System.out.println(EWrapperMsgGenerator.error(str));
+	}
+
+	@Override public void tickPrice(int tickerId, int field, double price, TickAttr attribs) {
+	// client.reqAccountUpdates(true, "U2105127");
+         //   System.out.println("order counter"+bothSymbolsList.get(tickerId).orderCounter + "ticker "+bothSymbolsList.get(tickerId).firstSymbol);
+          System.out.println("tickerid main"+tickerId);
+            if (tickerId>130){
+                
+                 System.out.println("tickerid option"+tickerId);
+              //  client.cancelMktData(tickerId);
+            }
+           else { 
+           ////// do anything below not an option    
+               if (field==72){
+              System.out.println(field+ "daily high or low"+price);   
+                bothSymbolsList.get(tickerId).dailyhigh = price;  
+             
+            }
+              if (field==73){
+              System.out.println(field+ "daily high or low"+price);   
+                bothSymbolsList.get(tickerId).dailylow = price;   
+            }
+               System.out.println(price + "   -- check price--" +field);
+                System.out.println("no option main"+tickerId);
+                
+                  bothSymbolsList.get(tickerId).resetit++;
+                   
+                  if (bothSymbolsList.get(tickerId).resetit>=350){
+                  bothSymbolsList.get(tickerId).strikecall=0.0;
+                  bothSymbolsList.get(tickerId).strikeput=0;
+                   System.out.println("reset call and put"+tickerId);
+                  }
+                  
+            if ( bothSymbolsList.get(tickerId).dailylow!=0.0&& bothSymbolsList.get(tickerId).dailyhigh!=0.0){
+cal1= bothSymbolsList.get(tickerId).dailyhigh- bothSymbolsList.get(tickerId).dailylow; 
+//bid is lowest, for entry purposes we want lowest variable avail, bid is lower than last and ask
+            if (field==66){
+                
+            if (bothSymbolsList.get(tickerId).orderCounter == 0){ 
+            
+            if( bothSymbolsList.get(tickerId).strikecall==0.0||bothSymbolsList.get(tickerId).strikeput==0){
+              
+
+         
+                //we have no strikes!!!
+                 System.out.println("return strike It is zero! ");
+              bothSymbolsList.get(tickerId).bid = price;  
+System.out.println("set this bid: "+ bothSymbolsList.get(tickerId).bid);
+
+System.out.println("this is call 2 "+cal2);
+              client.reqSecDefOptParams(tickerId, bothSymbolsList.get(tickerId).firstSymbol, "", "STK", bothSymbolsList.get(tickerId).conid);
+     // client.cancelMktData(tickerId);
+     //  requestStreamingData();
+            } else {
+
+ 
+     if( bothSymbolsList.get(tickerId).optionlast==0.0){
+                        //    client.cancelMktData(tickerId);
+   //// client.reqSecDefOptParams(tickerId, bothSymbolsList.get(tickerId).firstSymbol, "", "STK", bothSymbolsList.get(tickerId).conid);
+     System.out.println("optionlast loop nothing"+ bothSymbolsList.get(tickerId).optionlast);
+                        }  else {
+             System.out.println("call "+bothSymbolsList.get(tickerId).strikecall+"xyz put "+ bothSymbolsList.get(tickerId).strikeput+" last"+bothSymbolsList.get(tickerId).optionlast);
+           bothSymbolsList.get(tickerId).orderCounter++;
+   cal2 =  bothSymbolsList.get(tickerId).bid *.005;
+    cal3 =  bothSymbolsList.get(tickerId).bid *.002;
+    
+    //check if range is big enough, then within that check if price is weak enough or strong enough
+    //for a trend catch attempt
+ if (cal1>cal2){
+System.out.println("calculation number 1 "+cal1+ bothSymbolsList.get(tickerId).firstSymbol + price );
+  
+System.out.println("calculation number 2 - price 1% "+cal2 +bothSymbolsList.get(tickerId).firstSymbol+price+" bid saved "+  bothSymbolsList.get(tickerId).bid);
+ 
+      System.out.println("min tick "+ bothSymbolsList.get(tickerId).minTick);
+       //client.cancelMktData(tickerId);
+          double aaf = price-bothSymbolsList.get(tickerId).minTick;
+            nextValidId_prev = nextOrderID;
+ 
+
+double buytrig1= bothSymbolsList.get(tickerId).dailyhigh-cal3;
+double selltrig1=bothSymbolsList.get(tickerId).dailylow+cal3;
+    
+       String formatedmainPrice = "";
+            DecimalFormat df = new DecimalFormat(bothSymbolsList.get(tickerId).decimalFormat); // TODO get digit according
+           formatedmainPrice = df.format(bothSymbolsList.get(tickerId).bid); 
+       
+              String formatedmainPriceb = "";
+               formatedmainPriceb = df.format(buytrig1); 
+              String formatedmainPrices = "";
+            formatedmainPrices = df.format(selltrig1); 
+
+                  System.out.println("price cal"+Double.valueOf(formatedmainPrice));
+                  System.out.println("buy cal"+Double.valueOf(formatedmainPriceb));
+                  System.out.println("sell cal"+Double.valueOf(formatedmainPrices));
+                  
+                  if (Double.valueOf(formatedmainPrice)<Double.valueOf(formatedmainPriceb)&&Double.valueOf(formatedmainPrice)>Double.valueOf(formatedmainPrices))
+                  {  System.out.println("NO TRADE CONDITIONS");} else {
+ 
+if (Double.valueOf(formatedmainPrice)<Double.valueOf(formatedmainPrices)){
+      corp = "P";
+      strikepr= bothSymbolsList.get(tickerId).strikeput;
+       System.out.println("SET PUT");
+}
+
+if (Double.valueOf(formatedmainPrice)>Double.valueOf(formatedmainPriceb)){
+      corp = "C";
+       System.out.println("SET CALL");
+      strikepr= bothSymbolsList.get(tickerId).strikecall;
+}
+
+     
+         
+            Contract contract = new Contract();
+            contract.symbol(bothSymbolsList.get(tickerId).firstSymbol);
+            System.out.println("right here 1 exp "+ bothSymbolsList.get(tickerId).firstSymbol);
+                  contract.secType ("OPT");
+                  contract.exchange("SMART");
+                  contract.currency("USD");
+                  contract.right(corp);
+                  contract.primaryExch("SMART");
+                  contract.strike(strikepr);
+                  System.out.println("right here 1 exp "+ bothSymbolsList.get(tickerId).exp);
+                  contract.lastTradeDateOrContractMonth(bothSymbolsList.get(tickerId).exp);
+                  System.out.println("CONTRACT HERE"+contract);
+              Order trailOrder = new Order();
+  
+     
+            Order order = new Order();
+            order.action("BUY");
+            order.totalQuantity(1);
+            bothSymbolsList.get(tickerId).decimalFormat= "0.00";
+              String formatedEntryPrice = "";
+           formatedEntryPrice = df.format(bothSymbolsList.get(tickerId).optionlast); // ignore value
+              
+            order.lmtPrice(Double.valueOf(formatedEntryPrice));
+              System.out.println("CONTRACT HERE double"+Double.valueOf(formatedEntryPrice));
+            order.orderType("LMT");    
+            order.account("DF533361");
+            order.transmit(false);
+              
+
+     
+            
+            
+  int parent = nextOrderID;
+  NumberFormat nf = NumberFormat.getInstance();
+nf.setMaximumFractionDigits(2);            
+nf.setGroupingUsed(false);
+double multi;
+  if (Double.valueOf(formatedEntryPrice)<.04){ multi =(Double.valueOf(formatedEntryPrice)*3);}
+  else if (Double.valueOf(formatedEntryPrice)<.1){ multi =(Double.valueOf(formatedEntryPrice)*2.2);} 
+  else { multi =(Double.valueOf(formatedEntryPrice)*1);}
+  double exittarget  = (Double.valueOf(formatedEntryPrice));
+  double exittarget1  = (exittarget+multi);
+  
+System.out.println(nf.format(exittarget1));
+double ffff =Double.valueOf((nf.format(exittarget1)));
+     System.out.println("exit target"+ffff);
+                Order takeProfit = new Order();
+		takeProfit.action("SELL");
+		takeProfit.orderType("LMT");
+		takeProfit.totalQuantity(1);
+                takeProfit.tif("GTC");
+		takeProfit.lmtPrice(ffff);
+                takeProfit.account("DF533361");
+                int parenta = nextOrderID;
+		takeProfit.parentId(parenta);
+                trailOrder.parentId(parenta);
+		takeProfit.transmit(false);
+
+        
+            trailOrder.action("SELL");
+            trailOrder.trailingPercent(50);
+            trailOrder.orderType("TRAIL");
+            trailOrder.tif("GTC");
+            trailOrder.account("DF533361");
+            trailOrder.totalQuantity(1);
+            trailOrder.parentId(nextValidId_prev);
+
+            trailOrder.transmit(true);
+            int tree= nextOrderID++;
+  if (Double.valueOf(formatedEntryPrice)<.25){
+           client.placeOrder(tree, contract, order);  
+            client.placeOrder(nextOrderID++, contract, takeProfit);
+            client.placeOrder(nextOrderID++, contract, trailOrder);
+              
+      System.out.println( "nextorder1 "+ nextOrderID + 1);
+        System.out.println( "nextorder standard "+ nextOrderID );
+                //normal below here.
+                
+                   System.out.println("open return strike"+ corp);
+          System.out.println("tp inside "+price +corp+bothSymbolsList.get(tickerId).firstSymbol+EWrapperMsgGenerator.tickPrice(tickerId, field, price, attribs));
+             
+          
+           /* 
+           String urlParameters = "Call_Put="+corp+"&EntryPrice="+Double.valueOf(formatedEntryPrice)+"&Quantity="+1+"&Strike="+strikepr+"&Exp="+bothSymbolsList.get(tickerId).exp+"&order_id="+tree;
+
+                URL url = null;
+     try {
+         url = new URL("https://placeprint.xyz/get1.php");
+     } catch (MalformedURLException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+URLConnection conn = null;
+     try {
+         conn = url.openConnection();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+conn.setDoOutput(true);
+
+OutputStreamWriter writer = null;
+     try {
+         writer = new OutputStreamWriter(conn.getOutputStream());
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+     try {
+         writer.write(urlParameters);
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     try {
+         writer.flush();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+String line;
+BufferedReader reader = null;
+     try {
+         reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+     try {
+         while ((line = reader.readLine()) != null) {
+             System.out.println(line);
+         }    } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     try {
+         writer.close();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     try { 
+         reader.close();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     	
+          */
+           
+                //act normal we have strikes
+            nextOrderID++; 
+            
+            
+  }else {   System.out.println("it is too big to trade!!!");
+  
+  }
+                  }
+                              System.out.println("shrimp");
+                              System.out.println("return strike"+corp);
+          
+                        }
+ else {
+   System.out.println("Too small of an order range.");
+  // client.cancelMktData(tickerId);
+  }
+     }       
+            }
+        
+             }
+             }
+            ////after this different 
+            }  else {
+              System.out.println("NOT READY FOR ORDER");
+          //  client.cancelMktData(tickerId);
+
+            }}
+           
+        }
+
+	@Override public void tickSize(int tickerId, int field, int size) {
+		//System.out.println(EWrapperMsgGenerator.tickSize(tickerId, field, size));
+	
+                    
+        }
+
+	@Override public void tickOptionComputation(int tickerId, int field, double impliedVol, double delta, double optPrice, double pvDividend, double gamma, double vega, double theta, double undPrice) {
+		//System.out.println(EWrapperMsgGenerator.tickOptionComputation(tickerId, field, impliedVol, delta, optPrice, pvDividend, gamma, vega, theta, undPrice));
+               
+                   int asds =tickerId/130;
+                //   System.out.println("OPTION DATA: ticker "+bothSymbolsList.get(asds).firstSymbol+" LAST TRADE"+bothSymbolsList.get(asds).optionlast);
+           
+                if (field==80){
+               
+                     bothSymbolsList.get(asds).optionlast=optPrice;
+                      bothSymbolsList.get(asds).exp=bothSymbolsList.get(asds).exp;
+   bothSymbolsList.get(asds).strikecall=bothSymbolsList.get(asds).strikecall;
+     bothSymbolsList.get(asds).strikeput=bothSymbolsList.get(asds).strikeput;
+                      bothSymbolsList.get(asds).optiondelta=delta;
+           System.out.println("OPTION DATA: ticker "+bothSymbolsList.get(asds).firstSymbol+ "price"+optPrice +" delta "+ delta + "option field" +field +" ticker"+tickerId+"strike "+ bothSymbolsList.get(asds).strikecall+  bothSymbolsList.get(asds).strikeput);
+  
+                     System.out.println( "OPTION DATA strikecall: "+bothSymbolsList.get(asds).strikecall);
+                   System.out.println( "OPTION DATA exp: "+bothSymbolsList.get(asds).exp);}
+                 //client.cancelMktData(tickerId);
+                }
+
+	@Override public void tickGeneric(int tickerId, int tickType, double value) {
+		System.out.println(EWrapperMsgGenerator.tickGeneric(tickerId, tickType, value));
+	}
+
+	@Override public void tickString(int tickerId, int tickType, String value) {
+		System.out.println(EWrapperMsgGenerator.tickString(tickerId, tickType, value));
+	}
+
+	@Override public void tickEFP(int tickerId, int tickType, double basisPoints, String formattedBasisPoints, double impliedFuture, int holdDays, String futureLastTradeDate, double dividendImpact,
+			double dividendsToLastTradeDate) {
+		System.out.println(EWrapperMsgGenerator.tickEFP( tickerId, tickType, basisPoints, formattedBasisPoints, impliedFuture, holdDays, futureLastTradeDate, dividendImpact, dividendsToLastTradeDate));
+	}
+
+	@Override public void orderStatus(int orderId, String status, double filled, double remaining, double avgFillPrice, int permId, int parentId, double lastFillPrice, int clientId, String whyHeld, double mktCapPrice) {
+		System.out.println(EWrapperMsgGenerator.orderStatus( orderId,  status, filled, remaining, avgFillPrice, permId, parentId, lastFillPrice, clientId, whyHeld, mktCapPrice));
+	System.out.println("TESTHERE");
+                
+  /*        String urlParameters = "order_id="+orderId+"&avgFillPrice="+avgFillPrice+"&remaining="+remaining+"&parentId="+parentId+"&filled="+filled+"&lastFillPrice="+lastFillPrice;
+
+                URL url = null;
+     try {
+         url = new URL("https://placeprint.xyz/orderStatus.php");
+     } catch (MalformedURLException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+URLConnection conn = null;
+     try {
+         conn = url.openConnection();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+conn.setDoOutput(true);
+
+OutputStreamWriter writer = null;
+     try {
+         writer = new OutputStreamWriter(conn.getOutputStream());
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+     try {
+         writer.write(urlParameters);
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     try {
+         writer.flush();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+String line;
+BufferedReader reader = null;
+     try {
+         reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+
+     try {
+         while ((line = reader.readLine()) != null) {
+             System.out.println(line);
+         }    } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     try {
+         writer.close();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     try { 
+         reader.close();
+     } catch (IOException ex) {
+         Logger.getLogger(firstlivedec282017_1241pmet.class.getName()).log(Level.SEVERE, null, ex);
+     }
+*/ 
+  
+        }
+
+	@Override public void openOrder(int orderId, Contract contract, Order order, OrderState orderState) {
+		System.out.println(EWrapperMsgGenerator.openOrder( orderId, contract, order, orderState));
+	}
+
+	@Override public void openOrderEnd() {
+		System.out.println(EWrapperMsgGenerator.openOrderEnd());
+	}
+
+	@Override public void updateAccountValue(String key, String value, String currency, String accountName) {
+		System.out.println(EWrapperMsgGenerator.updateAccountValue( key, value, currency, accountName));
+                System.out.println("netliq value"+"key "+value);
+                
+	}
+
+	@Override public void updatePortfolio(Contract contract, double position, double marketPrice, double marketValue, double averageCost, double unrealizedPNL, double realizedPNL, String accountName) {
+		System.out.println(EWrapperMsgGenerator.updatePortfolio( contract, position, marketPrice, marketValue, averageCost, unrealizedPNL, realizedPNL, accountName));
+	}
+
+	@Override public void updateAccountTime(String timeStamp) {
+		System.out.println(EWrapperMsgGenerator.updateAccountTime( timeStamp));
+	}
+
+	@Override public void accountDownloadEnd(String accountName) {
+		System.out.println(EWrapperMsgGenerator.accountDownloadEnd(accountName));
+	}
+
+	@Override public void contractDetails(int reqId, ContractDetails contractDetails) {
+		System.out.println(EWrapperMsgGenerator.contractDetails( reqId, contractDetails));
+                  //  System.out.println( "xxx "+ contractDetails.contract().symbol());
+                   // System.out.println( "yyy "+contractDetails.conid());
+                    
+                     idd++;
+                       bothSymbolsList.get(reqId).minTick = contractDetails.minTick();
+                      for (int i = 0; i < bothSymbolsList.size(); i++) { 
+                          if (bothSymbolsList.get(i).firstSymbol.equals(contractDetails.contract().symbol())){
+                     bothSymbolsList.get(i).conid = contractDetails.conid();
+                       bothSymbolsList.get(i).primex = contractDetails.contract().primaryExch();
+                                System.out.println( "xxx "+ contractDetails.contract().symbol()+ "primex "+contractDetails.contract().primaryExch() );
+                    System.out.println( "yyy "+contractDetails.conid());
+                   
+                         //client.reqSecDefOptParams(idd, contractDetails.contract().symbol(), "", "STK", contractDetails.conid());
+                      }}
+                        if (idd>80) {
+                     requestStreamingData();
+                     idd =0;
+                     }
+                   	}
+
+	@Override public void bondContractDetails(int reqId, ContractDetails contractDetails) {
+		System.out.println("xxx "+EWrapperMsgGenerator.bondContractDetails( reqId, contractDetails));
+	}
+
+	@Override public void contractDetailsEnd(int reqId) {
+		System.out.println(EWrapperMsgGenerator.contractDetailsEnd(reqId));
+	}
+
+	@Override public void execDetails(int reqId, Contract contract, Execution execution) {
+		System.out.println(EWrapperMsgGenerator.execDetails( reqId, contract, execution));
+	}
+
+	@Override public void execDetailsEnd(int reqId) {
+		System.out.println(EWrapperMsgGenerator.execDetailsEnd( reqId));
+	}
+
+	@Override public void updateMktDepth(int tickerId, int position, int operation, int side, double price, int size) {
+		System.out.println(EWrapperMsgGenerator.updateMktDepth(tickerId, position, operation, side, price, size));
+	}
+
+	@Override public void updateMktDepthL2(int tickerId, int position, String marketMaker, int operation, int side, double price, int size) {
+		System.out.println(EWrapperMsgGenerator.updateMktDepthL2( tickerId, position, marketMaker, operation, side, price, size));
+	}
+
+	@Override public void updateNewsBulletin(int msgId, int msgType, String message, String origExchange) {
+		System.out.println(EWrapperMsgGenerator.updateNewsBulletin( msgId, msgType, message, origExchange));
+	}
+
+	@Override public void managedAccounts(String accountsList) {
+		System.out.println(EWrapperMsgGenerator.managedAccounts( accountsList));
+	}
+
+	@Override public void receiveFA(int faDataType, String xml) {
+		System.out.println(EWrapperMsgGenerator.receiveFA( faDataType, xml));
+	}
+
+	
+
+	@Override public void scannerParameters(String xml) {
+		System.out.println(EWrapperMsgGenerator.scannerParameters(xml));
+	}
+
+	@Override public void scannerData(int reqId, int rank, ContractDetails contractDetails, String distance, String benchmark, String projection, String legsStr) {
+		System.out.println(EWrapperMsgGenerator.scannerData( reqId, rank, contractDetails, distance, benchmark, projection, legsStr));
+	}
+
+	@Override public void scannerDataEnd(int reqId) {
+		System.out.println(EWrapperMsgGenerator.scannerDataEnd(reqId));
+	}
+
+	@Override public void realtimeBar(int reqId, long time, double open, double high, double low, double close, long volume, double wap, int count) {
+		System.out.println(EWrapperMsgGenerator.realtimeBar( reqId, time, open, high, low, close, volume, wap, count));
+	}
+
+	@Override public void currentTime(long time) {
+		System.out.println(EWrapperMsgGenerator.currentTime( time));
+	}
+
+	@Override public void fundamentalData(int reqId, String data) {
+		System.out.println(EWrapperMsgGenerator.fundamentalData( reqId,  data));
+	}
+
+	@Override public void deltaNeutralValidation(int reqId, DeltaNeutralContract underComp) {
+		System.out.println(EWrapperMsgGenerator.deltaNeutralValidation( reqId, underComp));
+	}
+
+	@Override public void tickSnapshotEnd(int reqId) {
+		System.out.println(EWrapperMsgGenerator.tickSnapshotEnd( reqId));
+	}
+
+	@Override public void marketDataType(int reqId, int marketDataType) {
+		System.out.println(EWrapperMsgGenerator.marketDataType( reqId, marketDataType));
+	}
+
+	@Override public void commissionReport(CommissionReport commissionReport) {
+		System.out.println(EWrapperMsgGenerator.commissionReport( commissionReport));
+	}
+
+	@Override public void position(String account, Contract contract, double pos, double avgCost) {
+		System.out.println(EWrapperMsgGenerator.position( account,  contract,  pos,  avgCost));
+	}
+
+	@Override public void positionEnd() {
+		System.out.println(EWrapperMsgGenerator.positionEnd());
+	}
+
+	@Override public void accountSummary(int reqId, String account, String tag, String value, String currency) {
+		System.out.println(EWrapperMsgGenerator.accountSummary( reqId, account, tag, value, currency));
+                             System.out.println("VALUE!!!!!!!!!"+value );
+                
+        portfoliostructure portfoliostructure;
+        aaa = new ArrayList<>();
+        portfoliostructure = new portfoliostructure();
+        portfoliostructure.netLiq = value;
+        aaa.add(portfoliostructure);
+        aaa.get(reqId).netLiq = value;
+        System.out.println("value according to storage!!!!= "+ aaa.get(reqId).netLiq);
+        
+            
+	}
+
+	@Override public void accountSummaryEnd(int reqId) {
+		System.out.println(EWrapperMsgGenerator.accountSummaryEnd( reqId));
+	}
+	
+	@Override public void verifyMessageAPI( String apiData) {
+	}
+
+	@Override public void verifyCompleted( boolean isSuccessful, String errorText){
+	}
+
+	@Override public void verifyAndAuthMessageAPI( String apiData, String xyzChallenge) {
+	}
+
+	@Override public void verifyAndAuthCompleted( boolean isSuccessful, String errorText){
+	}
+
+	@Override public void displayGroupList( int reqId, String groups){
+	}
+
+	@Override public void displayGroupUpdated( int reqId, String contractInfo){
+	}
+	
+	@Override public void positionMulti( int reqId, String account, String modelCode, Contract contract, double pos, double avgCost) {
+		System.out.println(EWrapperMsgGenerator.positionMulti( reqId, account, modelCode, contract, pos, avgCost));
+	}
+
+	@Override public void positionMultiEnd( int reqId) {
+		System.out.println(EWrapperMsgGenerator.positionMultiEnd( reqId));
+	}
+
+	@Override public void accountUpdateMulti( int reqId, String account, String modelCode, String key, String value, String currency) {
+		System.out.println(EWrapperMsgGenerator.accountUpdateMulti( reqId, account, modelCode, key, value, currency));
+	}
+
+	@Override public void accountUpdateMultiEnd( int reqId) {
+		System.out.println(EWrapperMsgGenerator.accountUpdateMultiEnd( reqId));
+	}
+	
+	public void connectAck() {
+	}
+
+	@Override
+	public void securityDefinitionOptionalParameter(int reqId, String exchange, int underlyingConId, String tradingClass,
+			String multiplier, Set<String> expirations, Set<Double> strikes) {
+		System.out.println(EWrapperMsgGenerator.securityDefinitionOptionalParameter( reqId, exchange, underlyingConId, tradingClass, multiplier, expirations, strikes));
+             //   for (Iterator<String> i = expirations.iterator(); i.hasNext();) {
+   // String item = i.next();
+            
+            
+     for (int x = 0; x < twsContractList.size(); x++) { 
+          if  (exchange.equals("SMART")||exchange.equals("AMEX")||exchange.equals("ISE")){
+              
+   if  (exchange.equals("SMART")&&underlyingConId==bothSymbolsList.get(x).conid){
+       
+      
+          
+ List<String> notSoCoolStringList = new ArrayList<String>();
+        notSoCoolStringList.addAll(expirations);
+      notSoCoolStringList.sort(Comparator.naturalOrder());
+      
+ List<Double> notSoCoolStringList1 = new ArrayList<Double>();
+        notSoCoolStringList1.addAll(strikes);
+      notSoCoolStringList1.sort(Comparator.naturalOrder());    
+   /////////REVERT
+   /////////POINT
+   /////////I think 
+    double xx = bothSymbolsList.get(x).bid*.027;
+  double start = bothSymbolsList.get(x).bid*.022;
+
+    double xxx= bothSymbolsList.get(x).bid+xx;
+        double startxxx= bothSymbolsList.get(x).bid+start;
+     double xxxx= bothSymbolsList.get(x).bid-xx;
+       System.out.println("1.69 percent"+xx);
+        
+    
+        //It took four line to create and initialize List
+        System.err.println(" List real : " +  notSoCoolStringList.get(3)+ "one +" +notSoCoolStringList.get(1));
+  System.err.println(" List strikes : " + "one +" +notSoCoolStringList1);
+ bothSymbolsList.get(x).exp=notSoCoolStringList.get(2);
+ 
+ //calls here!
+       for (Double item : notSoCoolStringList1) {
+                 
+           
+           // if (item>bothSymbolsList.get(x).bid){
+          // if (bothSymbolsList.get(x).strikecall==0.0){
+           if (item>startxxx&&item<xxx) {
+               
+               System.out.println("x var "+x );
+               System.out.println("GREATER THAN"+ item +bothSymbolsList.get(x).bid +"  "+ bothSymbolsList.get(x).firstSymbol);
+               if (bothSymbolsList.get(x).strikecall==0.0){  
+                   
+                   bothSymbolsList.get(x).strikecall=item;
+               }
+               System.out.println("strikecall "+ item +bothSymbolsList.get(x).strikecall);
+           System.out.println( "option for: "+bothSymbolsList.get(x).firstSymbol);
+        System.out.println( "option id for: "+bothSymbolsList.get(x).conid);
+          Contract contract = new Contract();
+               System.out.println( "option firstx: "+bothSymbolsList.get(reqId).firstSymbol);
+            contract.symbol(bothSymbolsList.get(reqId).firstSymbol);
+                  contract.secType ("OPT");
+                  contract.exchange("SMART");
+                  contract.currency("USD");
+                  contract.right("C");
+                  int asd = reqId*130;
+                  contract.strike(bothSymbolsList.get(reqId).strikecall);
+               System.out.println( "option strikecall: "+bothSymbolsList.get(reqId).strikecall);
+                   System.out.println( "option exp: "+bothSymbolsList.get(reqId).exp);
+               contract.lastTradeDateOrContractMonth(bothSymbolsList.get(reqId).exp);
+            
+             // client.cancelMktData(asd);
+          client.reqMktData(asd, contract, "", false ,false, null);
+           
+           }
+       //}
+    
+           if (item<bothSymbolsList.get(x).bid&&item>xxxx){
+              
+               System.out.println("put 1.69 percent less"+xxxx);
+               System.out.println("put LESS THAN"+ item +bothSymbolsList.get(x).bid +"  "+ bothSymbolsList.get(x).firstSymbol);
+             // 
+               System.out.println("x put var "+x );
+               //System.out.println("strikeput "+ item +bothSymbolsList.get(x).strikeput);
+               
+                   if (bothSymbolsList.get(x).strikeput==0.0){  
+                   
+                   bothSymbolsList.get(x).strikeput=item;
+               }
+               System.out.println("strikeput "+ item +bothSymbolsList.get(x).strikeput);
+           System.out.println( "option for: "+bothSymbolsList.get(x).firstSymbol);
+        System.out.println( "option id for: "+bothSymbolsList.get(x).conid);
+          Contract contract = new Contract();
+               System.out.println( "option firstx: "+bothSymbolsList.get(reqId).firstSymbol);
+            contract.symbol(bothSymbolsList.get(reqId).firstSymbol);
+                  contract.secType ("OPT");
+                  contract.exchange("SMART");
+                  contract.currency("USD");
+                  contract.right("P");
+                  int asd = reqId*130;
+                  contract.strike(bothSymbolsList.get(reqId).strikeput);
+               System.out.println( "option strikeput: "+bothSymbolsList.get(reqId).strikeput);
+                   System.out.println( "option exp: "+bothSymbolsList.get(reqId).exp);
+               contract.lastTradeDateOrContractMonth(bothSymbolsList.get(reqId).exp);
+            
+              //client.cancelMktData(asd);
+          client.reqMktData(asd, contract, "", false ,false, null);
+               
+           }  }
+     
+}  }
+    }
+   //  List list = new ArrayList();
+        //list.add(item);   
+//Set<String> sortedSet = new TreeSet<>(expirations);
+//for (Iterator<String> i = sortedSet.iterator(); i.hasNext();) {
+//String item = i.next();
+//System.out.println("TESTING sort= "+item);
+//System.out.println("TESTING sort= "+item);
+//}
+
+}
+        // Sort list
+     //   Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+     //   Iterator iterator = list.iterator();
+     //   while (iterator.hasNext()) {
+     //   System.out.println("sort LIST EXPIRATION: "+iterator.next());
+     //   }
+
+        
+                
+	
+
+	@Override
+	public void securityDefinitionOptionalParameterEnd(int reqId) {
+		System.out.println("OPTIONS!!!!"+EWrapperMsgGenerator.securityDefinitionOptionalParameterEnd( reqId));
+	}
+
+	@Override
+	public void softDollarTiers(int reqId, SoftDollarTier[] tiers) {
+		System.out.println(EWrapperMsgGenerator.softDollarTiers( reqId,tiers));
+	}
+
+    @Override
+    public void familyCodes(FamilyCode[] familyCodes) {
+		System.out.println(EWrapperMsgGenerator.familyCodes(familyCodes));
+    }
+
+    @Override
+    public void symbolSamples(int reqId, ContractDescription[] contractDescriptions) {
+		System.out.println(EWrapperMsgGenerator.symbolSamples( reqId, contractDescriptions));
+    }
+
+	@Override
+	public void historicalDataEnd(int reqId, String startDateStr, String endDateStr) {
+		System.out.println(EWrapperMsgGenerator.historicalDataEnd( reqId, startDateStr, endDateStr));
+	}
+
+	@Override
+	public void mktDepthExchanges(DepthMktDataDescription[] depthMktDataDescriptions) {
+		System.out.println(EWrapperMsgGenerator.mktDepthExchanges(depthMktDataDescriptions));
+	}
+
+	@Override
+	public void tickNews(int tickerId, long timeStamp, String providerCode, String articleId, String headline,
+			String extraData) {
+		System.out.println(EWrapperMsgGenerator.tickNews(tickerId, timeStamp, providerCode, articleId, headline, extraData));
+	}
+
+	@Override
+	public void smartComponents(int reqId, Map<Integer, Entry<String, Character>> theMap) {
+		System.out.println(EWrapperMsgGenerator.smartComponents(reqId, theMap));
+	}
+
+	@Override
+	public void tickReqParams(int tickerId, double minTick, String bboExchange, int snapshotPermissions) {
+		System.out.println(EWrapperMsgGenerator.tickReqParams(tickerId, minTick, bboExchange, snapshotPermissions));
+	}
+
+	@Override
+	public void newsProviders(NewsProvider[] newsProviders) {
+		System.out.println(EWrapperMsgGenerator.newsProviders(newsProviders));
+	}
+
+	@Override
+	public void newsArticle(int requestId, int articleType, String articleText) {
+		System.out.println(EWrapperMsgGenerator.newsArticle(requestId, articleType, articleText));
+	}
+
+	@Override
+	public void historicalNews(int requestId, String time, String providerCode, String articleId, String headline) {
+		System.out.println(EWrapperMsgGenerator.historicalNews(requestId, time, providerCode, articleId, headline));
+	}
+
+	@Override
+	public void historicalNewsEnd(int requestId, boolean hasMore) {
+		System.out.println(EWrapperMsgGenerator.historicalNewsEnd(requestId, hasMore));
+	}
+	
+	@Override
+	public void headTimestamp(int reqId, String headTimestamp) {
+		System.out.println(EWrapperMsgGenerator.headTimestamp(reqId, headTimestamp));
+	}
+
+	@Override
+	public void histogramData(int reqId, List<HistogramEntry> items) {
+		System.out.println(EWrapperMsgGenerator.histogramData(reqId, items));
+	}
+
+    @Override
+    public void historicalDataUpdate(int reqId, Bar bar) {
+        historicalData(reqId, bar);
+    }
+
+	@Override
+	public void rerouteMktDataReq(int reqId, int conId, String exchange) {
+		System.out.println(EWrapperMsgGenerator.rerouteMktDataReq(reqId, conId, exchange));
+	}
+
+	@Override
+	public void rerouteMktDepthReq(int reqId, int conId, String exchange) {
+		System.out.println(EWrapperMsgGenerator.rerouteMktDepthReq(reqId, conId, exchange));
+	}
+
+	@Override
+	public void marketRule(int marketRuleId, PriceIncrement[] priceIncrements) {
+		System.out.println(EWrapperMsgGenerator.marketRule(marketRuleId, priceIncrements));
+	}
+	
+	@Override
+    public void pnl(int reqId, double dailyPnL, double unrealizedPnL, double realizedPnL) {
+        System.out.println(EWrapperMsgGenerator.pnl(reqId, dailyPnL, unrealizedPnL, realizedPnL));
+    }
+
+    @Override
+    public void pnlSingle(int reqId, int pos, double dailyPnL, double unrealizedPnL, double realizedPnL, double value) {
+        System.out.println(EWrapperMsgGenerator.pnlSingle(reqId, pos, dailyPnL, unrealizedPnL, realizedPnL, value));
+    }
+    
+    @Override
+    public void historicalTicks(int reqId, List<HistoricalTick> ticks, boolean done) {
+        for (HistoricalTick tick : ticks) {
+            System.out.println(EWrapperMsgGenerator.historicalTick(reqId, tick.time(), tick.price(), tick.size()));
+        }
+    }
+    
+    @Override
+    public void historicalTicksBidAsk(int reqId, List<HistoricalTickBidAsk> ticks, boolean done) {
+        for (HistoricalTickBidAsk tick : ticks) {
+            System.out.println(EWrapperMsgGenerator.historicalTickBidAsk(reqId, tick.time(), tick.mask(), tick.priceBid(), tick.priceAsk(), tick.sizeBid(),
+                    tick.sizeAsk()));
+        }
+    }   
+    
+    @Override
+    public void historicalTicksLast(int reqId, List<HistoricalTickLast> ticks, boolean done) {
+        for (HistoricalTickLast tick : ticks) {
+            System.out.println(EWrapperMsgGenerator.historicalTickLast(reqId, tick.time(), tick.mask(), tick.price(), tick.size(), tick.exchange(), 
+                tick.specialConditions()));
+        }
+    }
+
+}
