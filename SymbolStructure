@@ -1,0 +1,57 @@
+package apidemo;
+
+public class SymbolStructure {
+    public String firstSymbol;
+    public String secondSymbol;
+    public Integer reqId; // tickerId
+    public Double historicalHigh;
+    public Double historicalLow;
+     public Double entryplusminus;
+     public Double bid;
+       public Double obid;
+    public Double ask;
+     public Double open;
+    public Integer orderCounter = 0;
+    public Integer tickcounter = 0;
+    public Integer allow = 5;
+    public Integer didit = 0;
+        public boolean gettingcall = false;
+        public boolean gettingput = false;
+
+      public Integer opcounter = 0;
+      public Integer checked = 0;
+      public Integer xx = 0;
+       public Integer canceled = 0;
+       public Integer trytimes =0;
+    public Double minTick;
+     public Integer trackcountereachone;
+    public int follow;
+      public boolean check1 = false;
+  public boolean check2 = false;
+    public String both;
+    public String decimalFormat;
+    public String primex;
+   public String loc;
+   public Double optionlast =0.0; 
+   public Double optionputlast =0.0; 
+      public Double optioncalllast =0.0; 
+     public Double optionbid = 0.0; 
+   public Double optionask = 0.0; 
+   public Double optiondelta = 0.0; 
+    //intraday material
+     public Double dailyhigh = 0.0; 
+        public Double dailylow = 0.0; 
+        public Double prevclose = 0.0; 
+    public Double lastopen;
+    int  lastminute;
+    public int buytrue = 0;
+    public boolean wait = true;
+    int counter;
+    public int Time;
+     public int resetit = 0;
+    //option
+     public int conid = 0;
+     public double strikecall=0.0;
+     public double strikeput;
+     public String exp="";
+}
